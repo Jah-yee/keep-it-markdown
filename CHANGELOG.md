@@ -1,9 +1,9 @@
 # Changelog
 
 ## 0.7.0 Release (06/15/2026)
-- Added new `-no` option to to export markdown in a fully compatible format with Notion markdown file import
-- Added warning that archived notes are not exported unless using the `-a` option
-- Added the Keep NoteID to the `-n` option for the no labels search report so that notes without text or labels can be found
+- Added new `-no` option to to export markdown in a compatible format with Notion markdown file import
+- Added standard warning that archived notes are not exported unless using the `-a` option
+- Added the Keep NoteID to the `-n` option for the no labels search report so that notes without text and labels can be found
 - Added special instructions for export to Notion (NOTION.md) 
 
 ## 0.6.9 Release (03/23/2026)

@@ -12,6 +12,7 @@ import click
 import datetime
 import operator
 import logging
+import zipfile
 from os.path import join
 from pathlib import Path
 from dataclasses import dataclass, astuple
@@ -19,6 +20,7 @@ from xmlrpc.client import boolean
 from importlib.metadata import version
 from urllib.parse import urlparse
 from PIL import Image
+
 
 
 
@@ -38,6 +40,8 @@ MISSING = 'null value'
 NOTE_PREFIX = "#NOTE/"
 KEEP_URL = "https://keep.google.com/u/0/#NOTE/"
 LOG_FILE = "kim.log"
+NOTION = "notion"
+ZIPFILE = "keepexport.zip"
 
 TECH_ERR = " Technical Error Message: "
 
@@ -482,6 +486,23 @@ class FileService:
 
         except:
             raise RuntimeError("Error in download_file()")
+        
+    def zip_folder(self, folder_path, output_path):
+        ignore_folder_name = os.path.basename(os.path.dirname(output_path))
+
+        def walk_error(err):
+            print(f"Error creating zip file: {err}")
+
+        with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for root, dirs, files in os.walk(folder_path, followlinks=True, onerror=walk_error):
+                if ignore_folder_name in dirs:
+                    dirs.remove(ignore_folder_name)
+                    
+                for file in files:
+                    full_path = os.path.join(root, file)
+                    rel_path = os.path.relpath(full_path, folder_path)
+                    zipf.write(full_path, arcname=rel_path)
+        
 
     def set_file_extensions(self, data_file, file_name, file_path):
         dest_path = file_path + file_name
@@ -862,6 +883,15 @@ def keep_query_convert(keep, keepquery, opts):
         if opts.move_to_archive or opts.hashtags_to_labels:  #0.6.9
             keep.keep_sync()
 
+        if opts.notion:  #0.7.0
+            fs = FileService()
+            notionpath = Path(fs.outpath()) / NOTION
+            fs.create_path(notionpath)
+            sourcepath = Path(fs.outpath())
+            fs.zip_folder(sourcepath, notionpath / ZIPFILE)
+
+
+
         return (count)
     except Exception as e:
         raise RuntimeError("Error in keep_query_convert() - " + repr(e))
@@ -981,13 +1011,15 @@ def _validate_options(opts) -> None:
         raise click.UsageError("Exporting archived notes (-a) and also moving " 
                                 "them to archive (-m) is incompatible. " 
                                 "-- please use export archive (-a) without (-m)")
-    if an and (j or l):
+    if an and (j or l or no):
         raise click.UsageError("Exporting to Apple Notes format (-an) is " 
-                                "not compatible with Logseq (-l) or Joplin (-j) formats.")
+                                "not compatible with Logseq (-l) or Joplin (-j) " \
+                                "or Notion (-no) formats.")
 
     if cd and ed:
         raise click.UsageError("Filtering by both create date (-cd) and " 
                                 "edit date (-ed) is not compatible.")
+    
 
     date_filter_msg = "Date filter must be in the format '> YYYY-MM-DD' " \
                         "or '< YYYY-MM-DD' (e.g., '> 2023-01-15')."
@@ -1024,6 +1056,13 @@ def _validate_options(opts) -> None:
         FileService.log(
             "\r\nNOTE!! All notes that are missing labels will be reported by title, first 30 " + 
                 "characters of text, create date and noteid. NO NOTES ARE EXPORTED with this option!", q)
+        
+
+    if no:
+        FileService.log(
+            "\r\nNOTE!! Notion requires all exported markdown files in a single zip archive. Creating " + 
+                "a zip file may fail due to permissions of the markdown export folder!", q)
+
         
 
 
@@ -1125,7 +1164,7 @@ def main(
             edit_date
         )
  
-
+        #opts.notion = True
         _validate_options(astuple(opts))
         _validate_paths()
 
