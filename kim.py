@@ -405,35 +405,6 @@ class NameService:
         return (note_title)
     
 
-class FileService2:
-    def __init__(self):
-        self._namelist = set()
-
-    def clear_name_list(self):
-        self._namelist.clear()
-
-    def check_duplicate_name(self, note_title, note_date = ""):
-        if note_title in self._namelist:
-            note_title = note_title + note_date
-            note_title = self.check_duplicate_name(note_title, note_date)
-        else:
-            self._namelist.add(note_title)
-        return (note_title)
-
-    def check_file_exists(self, md_file, outpath, note_title, note_date):
-        note_title = ns.check_duplicate_name(note_title, note_date)
-
-        def has_collision(md_file):
-            file_exists = md_file.exists()
-            dir_exists = Path(outpath, note_title).exists()
-            return file_exists or dir_exists
-        
-        while has_collision(md_file):
-            note_title = self.check_duplicate_name(note_title, note_date)
-            md_file = Path(outpath, note_title + ".md")
-        return (note_title)
-
-
 class FileService:
     @staticmethod
     def log(text, silent_mode):
@@ -883,9 +854,9 @@ def keep_query_convert(keep, keepquery, opts):
         if opts.move_to_archive or opts.hashtags_to_labels:  #0.6.9
             keep.keep_sync()
 
-        if opts.notion:  #0.7.0
+        if opts.notion and count > 0:  #0.7.0
             fs = FileService()
-            notionpath = Path(fs.outpath()) / NOTION
+            notionpath = Path(fs.outpath()).parent / NOTION
             fs.create_path(notionpath)
             sourcepath = Path(fs.outpath())
             fs.zip_folder(sourcepath, notionpath / ZIPFILE)
@@ -915,6 +886,7 @@ def ui_login(master_token, opts):
 
         if not opts.archive_only:
             fs.log("Archived notes will be ignored - use (-a) to export archived notes\r\n", opts.silent_mode)
+
 
         userid = Config().get("google_userid").strip().lower()
 
@@ -963,7 +935,7 @@ def ui_query(keep, search_term, opts):
         else:
             kquery = "kquery"
             while kquery:
-                kquery = click.prompt("\r\nEnter a keyword search, label search or " + 
+                kquery = click.prompt("\r\nEnter a case sensitive keyword or label search or " + 
                     "'--all' to convert Keep notes to md or '--x' to exit", type=str)
                 if kquery != "--x":
                     count = keep_query_convert(keep, kquery, opts)
@@ -1164,7 +1136,6 @@ def main(
             edit_date
         )
  
-        #opts.notion = True
         _validate_options(astuple(opts))
         _validate_paths()
 

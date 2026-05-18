@@ -1,7 +1,7 @@
 ## Simple Export
 
 ### All user queries have the prompt:
-`Enter a keyword search, label search or --all' to convert Keep notes to md or '--x' to exit:`
+`Enter a case sensitive keyword or label search or --all' to convert Keep notes to md or '--x' to exit:`
 
 #### User query and export active notes (no notes will be overwritten)
 `python kim.py`
@@ -59,7 +59,6 @@
 ### List of options
 ```
 Options:
-  -r  Will reset and not use the local keep access token in your system's keyring  
   -o  Overwrite any existing markdown files with the same name  
   -a  Search and export only archived notes  
   -p  Preserve keep labels with spaces and special characters  
@@ -75,10 +74,13 @@ Options:
   -h  Convert hashtags in notes to labels - no notes are exported
   -i  Import notes from markdown files WARNING - RATE LIMITS!! 
   -an Format output markdown for proper Apple Notes import
+  -no Format output markdown for proper Notion import
   -lb TEXT  Comma delimited labels for import - for use with only with (-i) flag
   -cd TEXT  Export notes before or after the create date - < or > YYYY-MM-DD  
   -ed TEXT  Export notes before or after the edit date - < or > YYYY-MM-DD  
   -b  --search-term TEXT  Run in batch mode with a specific Keep search term  
   -t  --master-token TEXT  Log in using master keep token
+  -r  Will reset and not use the local keep access token in your system's keyring  
+
   --help Show this message and exit.
 ```
