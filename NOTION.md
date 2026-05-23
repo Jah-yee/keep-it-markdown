@@ -20,5 +20,9 @@ All image media types should transfer (images and drawings). Audio files will im
 
 ### Examples
 
-**Keep Note and Imported Notion Note**
+**Keep Notes and Imported Notion Notes**
+
+![](images/notion1.jpg)
+
+
 ![](images/notion2.jpg)
