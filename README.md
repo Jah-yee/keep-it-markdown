@@ -3,7 +3,7 @@
 # keep-it-markdown
 Keep-it-markdown or KIM converts Google Keep notes to markdown using the unofficial Python Keep API without having to use Google Takeout to export notes first. KIM can now also **import** markdown notes back to Keep. The script will execute on Windows, MacOS or Linux.
 
-The overall goal is to utilize Google Keep as an easy way to capture raw notes on all devices or additionally using the browser plugin. Then, notes can be queried for export to markdown files directly into notetaking apps such as Obsidian, Logseq and/or Notion, or used directly with Typora. 
+The overall goal is to utilize Google Keep as an easy way to capture raw notes on all devices or additionally using the browser plugin. Then, notes can be queried for export to markdown files directly into notetaking apps such as Obsidian, Logseq, Apple Notes, Joplin and/or Notion, or used directly with Typora. 
 
 ## Installation
 **Advanced Users:** see the **INSTALL.md** to skip over these installation details for simple step-by-steps  
@@ -74,7 +74,7 @@ Congrats! You can now run KIM. Simply start by running:
 ```
 After logging in you should see:
 ```bash
-> Enter a keyword search, label search or '--all' to convert Keep notes to md or '--x' to exit:
+> Enter a case sensitive keyword or label search or '--all' to convert Keep notes to md or '--x' to exit:
 ```
 
 Entering a query term and pressing Enter will execute your first export of a note or set of notes as individual markdown files from your active note list.
