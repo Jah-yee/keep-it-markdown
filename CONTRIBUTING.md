@@ -1,6 +1,6 @@
 ## NOTE: Kim is going to be significanly updated for version 0.8.0!!
 What's happening?  
-The kim code is being modified for better Python structure, testing, and proper CLI. This will modify the usage. You can still add 0.7.x small feature via pull requests if you'd like.  
+The kim code is being modified for better Python structure, testing, build and s proper CLI. This will modify the usage. You can still add 0.7.x small feature via pull requests if you'd like.  
 
 Please be aware the 0.8.0 changes will be fairly significant!
 
