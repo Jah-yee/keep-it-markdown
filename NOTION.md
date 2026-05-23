@@ -19,6 +19,8 @@ If you want to export all your Keep notes (run both `python kim.py -no -d -b --a
 All image media types should transfer (images and drawings). Audio files will import but you must download the audio to your device to play them. Reminders, active tags (hashtags will still be present), note-to-note links, formatted text and note colors do not transfer (reminder notes will transfer - just not the actual Tasks)
 
 ### Examples
+Query used: `python kim.py -no -o -d -w -b Snelling`
+(export in Notion format, overwrite existing, remove duplicate hashtags, convert note-to-note links to wikilinks, keyword search: Snelling)
 
 **Keep Notes and Imported Notion Notes**
 

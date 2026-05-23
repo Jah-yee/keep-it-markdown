@@ -18,3 +18,13 @@ importing markdown files with media links unless the markdown and media are wrap
 If you want to export all your notes (run both `python kim.py -an -d -b --all` and `python kim.py -an -d -a -b --all` to export both active and archive (`-a`) notes). The `-d` option removes duplicate labels in notes - e.g., if you have both #mytag in the note and the label 'mytag' as well.
 
 All media types should transfer (images, audios, and drawings). Reminders, formatted text and note colors do not transfer (reminder notes will transfer - just not the actual Tasks to Apple Reminders)
+
+### Examples
+Query used: `python kim.py -an -o -d -w -b Snelling`
+(export in Apple Notes format, overwrite existing, remove duplicate hashtags, convert note-to-note links to wikilinks, keyword search: Snelling)
+
+**Keep Notes and Imported Apple Notes**
+![](images/apple1.jpg)
+
+
+![](images/apple2.jpg)
