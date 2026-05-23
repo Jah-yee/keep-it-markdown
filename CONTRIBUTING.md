@@ -1,10 +1,8 @@
-## NOTE: Kim is in full refactoring for version 0.5.0!!
+## NOTE: Kim is going to be significanly updated for version 0.8.0!!
 What's happening?  
-The kim structure is being modified for more generic output of notes.  You will be able to define Keep input and output classes for markdown, joplin, json, etc. For example, the routine save_md_file() is generic for any markdown output for any input type as long as the Note data object is populated.  
+The kim code is being modified for better Python structure, testing, and proper CLI. This will modify the usage. You can still add 0.7.x small feature via pull requests if you'd like.  
 
-The goal is to modularize more of the input and output code so that new markdown apps can be accommodated.  
-
-Please be aware the 0.5.0 changes are fairly significant!
+Please be aware the 0.8.0 changes will be fairly significant!
 
 #### Pull Request Branch
 All contributions should submit pull requests to the **develop** branch and not **main** of this repo. 
